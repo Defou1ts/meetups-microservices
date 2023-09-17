@@ -1,0 +1,6 @@
+/meetups-microservice
+/meetups-gateway
+/meetups-auth-microservice
+/rabbitmq
+/pgdata
+.env

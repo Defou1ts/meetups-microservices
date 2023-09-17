@@ -1,0 +1,74 @@
+version: "3.0"
+
+services:
+  gateway-service:
+    container_name: gateway
+    env_file:
+      - .env
+    build:
+      context: ./meetups-gateway/
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./meetups-gateway:/app
+    ports:
+      - "${PORT}:${PORT}"
+    command: ["yarn", "start"]
+    depends_on:
+      - postgres
+      - rabbit
+    restart: always
+  auth-service:
+    container_name: auth
+    env_file:
+      - .env
+    build:
+      context: ./meetups-auth-microservice/
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./meetups-auth-microservice:/app
+    ports:
+      - 5002:5002
+    command: ["yarn", "start"]
+    depends_on:
+      - postgres
+      - rabbit
+    restart: always
+  meetups-service:
+    container_name: meetups
+    env_file:
+      - .env
+    build:
+      context: ./meetups-microservice/
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./meetups-microservice:/app
+    ports:
+      - 5003:5003
+    command: ["yarn", "start"]
+    depends_on:
+      - postgres
+      - rabbit
+    restart: always
+  postgres:
+    hostname: postgres
+    container_name: postgres
+    image: postgres:14
+    env_file:
+      - .env
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    restart: always
+  rabbit:
+    container_name: rabbitmq
+    env_file:
+      - .env
+    hostname: rabbit
+    image: lucifer8591/rabbitmq-server:3.7.17
+    ports:
+      - "${RABBIT_MQ_PORT}:${RABBIT_MQ_PORT}"
+      - "15672:15672"
+    volumes:
+      - ./rabbitmq:/var/lib/rabbitmq
+    restart: always
