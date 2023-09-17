@@ -48,6 +48,10 @@ $ docker-compose --file docker-compose.prod.yml up --build
 $ docker-compose --file docker-compose.dev.yml up --build
 ```
 
+Wait, first start can take few minutes.
+
+If you used .env above, service will be available by http://localhost:5000
+
 ## Basic functionality:
 
 - One to Many relations
