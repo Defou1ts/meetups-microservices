@@ -50,7 +50,7 @@ services:
       - rabbit
     restart: always
   postgres:
-    hostname: postgres
+    hostname: "${POSTGRES_HOST}"
     container_name: postgres
     image: postgres:14
     env_file:
@@ -64,7 +64,7 @@ services:
     container_name: rabbitmq
     env_file:
       - .env
-    hostname: rabbit
+    hostname: "${RABBIT_MQ_HOST}"
     image: lucifer8591/rabbitmq-server:3.7.17
     ports:
       - "${RABBIT_MQ_PORT}:${RABBIT_MQ_PORT}"
