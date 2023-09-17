@@ -41,6 +41,10 @@ SALT=5
 
 ```
 
+Your files structure should look like:
+
+![image](https://github.com/Defou1ts/meetups-microservices/assets/97761585/57af0e18-bb2f-43b8-ab9e-f37e5468c915)
+
 Start production or development docker-compose file with folowwing command:
 
 ```
