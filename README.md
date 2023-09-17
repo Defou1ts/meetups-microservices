@@ -4,23 +4,49 @@
 
 ## Installation:
 
+Clone this repository and clone microservices inside root path of this repository. Write next lines:
+
 ```
-$ yarn install
+$ git clone https://github.com/Defou1ts/meetups-gateway.git && cd meetups-gateway && yarn install && cd ..
+$ git clone https://github.com/Defou1ts/meetups-auth-microservice.git && cd meetups-auth-microservice && yarn install && cd ..
+$ git clone https://github.com/Defou1ts/meetups-microservice.git && cd meetups-microservice && yarn install && cd ..
+
 ```
 
-## .development.env && .production.env
+Then create .env file inside root path of this repository and configure it.
+Full environment denends on these variables and all microservices will use these variables for their connections. Example with simple configuration:
 
-- **_PORT_** - Your port of application
-- **_POSTGRES_HOST_** - postgres host (postgres if run in Docker)
-- **_POSTGRES_USER_** - postgres user (postgres)
-- **_POSTGRES_DB_** - postgres db name
-- **_POSTGRES_PASSWORD_** - postgres password to connect (root)
-- **_POSTGRES_PORT_** - postgres port
-- **_JWT_ACCESS_TOKEN_SECRET_** - jwt access secret key
-- **_JWT_ACCESS_TOKEN_EXPIRATION_TIME_** - jwt expiration time
-- **_JWT_REFRESH_TOKEN_SECRET_** - jwt refresh secret key
-- **_JWT_REFRESH_TOKEN_EXPIRATION_TIME_** - jwt refresh expiration time
-- **_SALT_** - salt for bcryptjs, password or tokens hashing
+```
+PORT=5000
+
+RABBIT_MQ_HOST=rabbit
+RABBIT_MQ_PORT=5672
+RABBITMQ_DEFAULT_USER=admin
+RABBITMQ_DEFAULT_PASS=admin
+RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit log_levels [{connection,error},{default,error}] disk_free_limit 2147483648
+
+POSTGRES_HOST=postgres
+POSTGRES_USER=postgres
+POSTGRES_DB=meetups
+POSTGRES_PASSWORD=root
+POSTGRES_PORT=5432
+PG_DATA=/var/lib/postgresql/data
+
+JWT_ACCESS_TOKEN_SECRET=access-secret
+JWT_ACCESS_TOKEN_EXPIRATION_TIME=900
+JWT_REFRESH_TOKEN_SECRET=refresh-secret
+JWT_REFRESH_TOKEN_EXPIRATION_TIME=28800
+
+SALT=5
+
+```
+
+Start production or development docker-compose file with folowwing command:
+
+```
+$ docker-compose --file docker-compose.prod.yml up --build
+$ docker-compose --file docker-compose.dev.yml up --build
+```
 
 ## Basic functionality:
 
@@ -41,33 +67,5 @@ $ yarn install
 - **_Eslint_**
 - **_Prettier_**
 - **_PassportJS_**
-
-## Docker run:
-
-Take care of correct POSTGRES_HOST=postgres if you run app in docker or in local machine
-
-### Dev .development.env example for docker:
-
-```
-PORT=5000
-
-POSTGRES_HOST=postgres
-POSTGRES_USER=postgres
-POSTGRES_DB=meetups
-POSTGRES_PASSWORD=root
-POSTGRES_PORT=5432
-
-JWT_ACCESS_TOKEN_SECRET=access-secret
-JWT_ACCESS_TOKEN_EXPIRATION_TIME=900
-JWT_REFRESH_TOKEN_SECRET=refresh-secret
-JWT_REFRESH_TOKEN_EXPIRATION_TIME=28800
-
-SALT=5
-```
-
-### Start:
-
-```
-$ yarn docker:dev - dev docker start
-$ yarn docker:prod - prod docker start
-```
+- **_RabbiqMQ_**
+- **_Microservices_**
