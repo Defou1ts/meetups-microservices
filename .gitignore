@@ -4,3 +4,4 @@
 /rabbitmq
 /pgdata
 .env
+README.task.md
