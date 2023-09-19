@@ -17,6 +17,7 @@ Then create .env file inside root path of this repository and configure it.
 Full environment denends on these variables and all microservices will use these variables for their connections. Example with simple configuration:
 
 ```
+HOST=localhost
 PORT=5000
 
 RABBIT_MQ_HOST=rabbit
@@ -39,14 +40,23 @@ JWT_REFRESH_TOKEN_EXPIRATION_TIME=28800
 
 SALT=5
 
+ELASTIC_HOST_FIRST_NODE=es01
+ELASTIC_HOST_SECOND_NODE=es02
+ELASTIC_HOST_THIRD_NODE=es03
+
+ELASTIC_USERNAME=kibana_system
 ELASTIC_PASSWORD=changeme
 KIBANA_PASSWORD=changeme
 STACK_VERSION=8.9.2
 CLUSTER_NAME=docker-cluster
 LICENSE=trial
-ES_PORT=9200
+ELASTIC_PORT=9200
 KIBANA_PORT=5601
 MEM_LIMIT=1073741824
+
+
+GOOGLE_CLIENT_ID=217845289970-mekt63184o3mdif0dc141ahcpfibbth1.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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
 
 ```
 
@@ -58,12 +68,16 @@ Start production or development docker-compose file with folowwing command:
 
 ```
 $ docker-compose --file docker-compose.prod.yml up --build
+//or
 $ docker-compose --file docker-compose.dev.yml up --build
 ```
 
 Wait, first start can take few minutes.
 
-If you used .env above, service will be available by http://localhost:5000
+If you used .env above:
+
+API will be available by http://localhost:5000
+KIBANA will be available by http://localhost:5601
 
 ## Basic functionality:
 
@@ -73,7 +87,10 @@ If you used .env above, service will be available by http://localhost:5000
 - Input data validation
 - HTTP correct requests and responses
 - JWT authorization with access token and refresh token
+- OAuth google authorization
 - Swagger Docmentation
+- PDF Generation
+- CSV Generation
 
 ## Technologies stack & project structure:
 
@@ -86,3 +103,5 @@ If you used .env above, service will be available by http://localhost:5000
 - **_PassportJS_**
 - **_RabbiqMQ_**
 - **_Microservices_**
+- **_Elasticsearch_**
+- **_Kibana_**
